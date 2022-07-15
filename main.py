@@ -1,25 +1,10 @@
-from requests import get
-from bs4 import BeautifulSoup
-import lxml
+from data import db_session
+from download_page import download
 
+# link = ["https://online.metro-cc.ru/category/ovoshchi-i-frukty/ovoshchi", "https://online.metro-cc.ru/category/alkogolnaya-produkciya/krepkiy-alkogol/viski"]
+link = ['https://online.metro-cc.ru/category/alkogolnaya-produkciya', 'https://online.metro-cc.ru/category/molochnye-prodkuty-syry-i-yayca', 'https://online.metro-cc.ru/category/bakaleya', 'https://online.metro-cc.ru/category/myasnye', 'https://online.metro-cc.ru/category/myasnaya-gastronomiya', 'https://online.metro-cc.ru/category/rybnye', 'https://online.metro-cc.ru/category/ovoshchi-i-frukty', 'https://online.metro-cc.ru/category/chaj-kofe-kakao', 'https://online.metro-cc.ru/category/hleb-vypechka-konditerskie-izdeliya', 'https://online.metro-cc.ru/category/bezalkogolnye-napitki', 'https://online.metro-cc.ru/category/zdorovoe-pitanie', 'https://online.metro-cc.ru/category/gotovye-bljuda-polufabrikaty', 'https://online.metro-cc.ru/category/tovary-dlya-doma-dachi-sada', 'https://online.metro-cc.ru/category/bytovaya-himiya', 'https://online.metro-cc.ru/category/kosmetika', 'https://online.metro-cc.ru/category/avtotovary', 'https://online.metro-cc.ru/category/elektronika-tekhnika', 'https://online.metro-cc.ru/category/tovary-dlja-zhivotnyh', 'https://online.metro-cc.ru/category/detskie-tovary', 'https://online.metro-cc.ru/category/professionalnoe-oborudovanie', 'https://online.metro-cc.ru/category/vse-dlya-remonta', 'https://online.metro-cc.ru/category/ofis-obuchenie-hobbi', 'https://online.metro-cc.ru/category/antibakterialnaya-produkciya']
+# https://online.metro-cc.ru/category/alkogolnaya-produkciya/krepkiy-alkogol/viski
 
-def get_with_url(url):
-    user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.82 Safari/537.36'
-    accept = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
-    accept_lang = 'ru-RU,ru;q=0.9'
-    headers = {
-        'Accept-Language': accept_lang,
-        'Accept': accept,
-        'User-Agent': user_agent,
-    }
+db_session.global_init("db/tovari.sqlite")
 
-    base = 'https://prnt.sc/'
-    resp = get(url, headers=headers)
-    if resp.status_code == 404:
-        print(404)
-        return
-    soup = BeautifulSoup(resp.text, 'lxml')
-    print(soup)
-
-
-print(get_with_url("https://online.metro-cc.ru/category/bytovaya-himiya/chistyaschie-sredstva/universalnye-chistyashchie-sredstva/domestos-hvoya-15l"))
+download()
